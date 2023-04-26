@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="Heading">Тhese are our Purchases</h1>
+</header>
+
+<div class="Main">
+
+    <main>
+        <a href="/stores" class="button-53" style="max-width: 180px"> ← Home</a>
+
+
+        <!--    <ul th:each="p : ${pe}">-->
+        <!--        <li><th:block th:text="${p}"></th:block></li>-->
+        <!--    </ul>-->
+
+        <!--    <ul th:each="p : ${pp}">-->
+        <!--        <li><th:block th:text="${p}"></th:block></li>-->
+        <!--    </ul>-->
+
+
+
+        <th:block th:if="${showPurchases}">
+            <table class="styled-table">
+                <tr>
+                    <th>Purchase ID:</th>
+                    <th>Date And Time:</th>
+                    <th>Store:</th>
+                    <th>Handled By:</th>
+                </tr>
+                <tr th:each="p : ${pe}">
+                    <td>
+                        <b><th:block th:text="${p.purchase_id}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.date_and_time}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.store.store_Name}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.saleWorker.employee_name} + ' ' + ${p.saleWorker.employee_surname}"></th:block></b>
+                    </td>
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+
+        <a href="/purchase/getPurchases"><button class="button-53"><th:block th:text="${text}"></th:block> All Purchases</button></a>
+
+        <br>
+
+        <h2>If you want to Add Purchase please select from which store you want to buy Products</h2>
+        <form action="/purchase/addPurchase" method="post">
+            <div class="form-group">
+                <select name="storeId" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                    <!--                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">-->
+                    <!--                    </option>-->
+                    <option th:each="store : ${stores}" th:selected="${stor != null && stor.store_Name == store.store_Name  ? true : false}" th:value="${store.store_Id}" th:text="${store.store_Name}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                    </option>
+
+                </select>
+            </div>
+            <button type="submit" class="button-53">Add Purchase</button>
+        </form>
+
+        <th:block th:if="${purchaseAdded}">
+
+            <table class="styled-table">
+                <tr>
+                    <th>Purchase ID:</th>
+                    <th>Date And Time:</th>
+                    <th>Store:</th>
+                    <th>Handled By:</th>
+
+
+                </tr>
+                <tr>
+                    <td>
+                        <b><th:block th:text="${pid}"></th:block></b>
+                    </td>
+
+                    <td>
+                        <b><th:block th:text="${date}"></th:block></b>
+                    </td>
+
+
+                    <td>
+                        <b><th:block th:text="${store}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${worker}"></th:block></b>
+                    </td>
+
+                </tr>
+            </table>
+
+            <h3><b>You successfully add Purchase. Lets add products on this purchase</b></h3>
+
+            <form action="/purchase/addToPurchase" method="post">
+
+                <div class="form-group">
+                    Select a Product
+                    <select title="Select a Product" name="productId" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                        <!--                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">-->
+                        <!--                    </option>-->
+
+                        <option th:each="product : ${products}"  th:value="${product.product_ID}" th:text="${product.product_Name}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+                        <input type="number" required name="quantity" id="quantity" placeholder="0" style="margin-left: 20px; padding: 5px;border-radius: 10px;">Insert Quantity
+
+                    </select>
+                </div>
+
+                <button type="submit" class="button-53">Add Product</button>
+            </form>
+
+            <th:block th:if="${haveProducts}">
+                <table class="styled-table">
+                    <tr>
+                        <th>Purchase ID:</th>
+                        <th>Date And Time:</th>
+                        <th>Store:</th>
+                        <th>Handled By:</th>
+                        <th>Product Name:</th>
+                        <th>Product Price:</th>
+                        <th>Quantity:</th>
+
+                    </tr>
+                    <tr th:each="p : ${pp}">
+                        <td>
+                            <b><th:block th:text="${p.purchase.purchase_id}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.purchase.date_and_time}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.purchase.store.store_Name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.purchase.saleWorker.employee_name} + ' ' + ${p.purchase.saleWorker.employee_surname}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.product.product_Name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.product.product_Price}"></th:block> Ден.</b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.quantity}"></th:block></b>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2><b>Total: <th:block th:text="${total}"></th:block> Ден.</b></h2>
+
+
+            </th:block>
+
+            <form action="/purchase/finishPurchase" method="post">
+
+                <button type="submit" class="button-53">Finish Purchase</button>
+
+            </form>
+        </th:block>
+
+
+
+
+
+        <br>
+        <th:block th:if="${seeProductsOnPurchase}">
+
+
+            <h3>Write Purchase ID to see which products are on the Purchase </h3>
+            <form action="/purchase" method="post">
+                <input name="purchaseId" type="text">
+                <button type="submit" class="button-53">See Products</button>
+            </form>
+
+
+            <br>
+
+
+            <th:block th:if="${getProducts}">
+                <table class="styled-table">
+                    <tr>
+                        <th>Purchase ID:</th>
+                        <th>Date And Time:</th>
+                        <th>Store:</th>
+                        <th>Handled By:</th>
+                        <th>Product Name:</th>
+                        <th>Product Price:</th>
+                        <th>Quantity:</th>
+
+                    </tr>
+                    <tr th:each="p : ${pp}">
+                        <td>
+                            <b><th:block th:text="${p.purchase.purchase_id}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.purchase.date_and_time}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.purchase.store.store_Name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.purchase.saleWorker.employee_name} + ' ' + ${p.purchase.saleWorker.employee_surname}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.product.product_Name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.product.product_Price}"></th:block> Ден.</b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.quantity}"></th:block></b>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2><b>Total: <th:block th:text="${total}"></th:block> Ден.</b></h2>
+            </th:block>
+
+
+        </th:block>
+
+
+    </main>
+    <hr>
+    <footer>
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+
+</div>
+
+
+</body>
+</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>Тhese are our Purchases</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+<!--    &lt;!&ndash;    <ul th:each="p : ${pe}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><th:block th:text="${p}"></th:block></li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <ul th:each="p : ${pp}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><th:block th:text="${p}"></th:block></li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+
+
+
+<!--    <th:block th:if="${showPurchases}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Purchase ID:</th>-->
+<!--                <th>Date And Time:</th>-->
+<!--                <th>Store:</th>-->
+<!--                <th>Handled By:</th>-->
+
+
+<!--            </tr>-->
+<!--            <tr th:each="p : ${pe}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.purchase_id}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.date_and_time}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.store.store_Name}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.saleWorker.employee_name} + ' ' + ${p.saleWorker.employee_surname}"></th:block></b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+
+<!--    <a href="/purchase"><button><th:block th:text="${text}"></th:block> All Purchases</button></a>-->
+
+<!--    <br>-->
+
+<!--        <h2>If you want to Add Purchase please select from which store you want to buy Products</h2>-->
+<!--        <form action="/purchase/addPurchase" method="post">-->
+<!--            <div class="form-group">-->
+<!--                <select name="storeId">-->
+<!--                    &lt;!&ndash;                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </option>&ndash;&gt;-->
+<!--                    <option th:each="store : ${stores}" th:selected="${stor != null && stor.store_Name == store.store_Name  ? true : false}" th:value="${store.store_Id}" th:text="${store.store_Name}">-->
+<!--                    </option>-->
+
+<!--                </select>-->
+<!--            </div>-->
+<!--            <button type="submit">Add Purchase</button>-->
+<!--        </form>-->
+
+<!--        <th:block th:if="${purchaseAdded}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Purchase ID:</th>-->
+<!--                    <th>Date And Time:</th>-->
+<!--                    <th>Store:</th>-->
+<!--                    <th>Handled By:</th>-->
+
+
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${pid}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${date}"></th:block></b>-->
+<!--                    </td>-->
+
+
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${store}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${worker}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <h3><b>You successfully add Purchase. Lets add products on this purchase</b></h3>-->
+
+<!--            <form action="/purchase/addToPurchase" method="post">-->
+
+<!--                <div class="form-group">-->
+<!--                    Select a Product-->
+<!--                    <select title="Select a Product" name="productId">-->
+<!--                        &lt;!&ndash;                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    </option>&ndash;&gt;-->
+
+<!--                        <option th:each="product : ${products}"  th:value="${product.product_ID}" th:text="${product.product_Name}">-->
+<!--                        </option>-->
+<!--                        <input type="number" required name="quantity" id="quantity" placeholder="0">Insert Quantity-->
+
+<!--                    </select>-->
+<!--                </div>-->
+
+<!--                <button type="submit">Add Product</button>-->
+<!--            </form>-->
+
+<!--            <th:block th:if="${haveProducts}">-->
+<!--                <table>-->
+<!--                    <tr>-->
+<!--                        <th>Purchase ID:</th>-->
+<!--                        <th>Date And Time:</th>-->
+<!--                        <th>Store:</th>-->
+<!--                        <th>Handled By:</th>-->
+<!--                        <th>Product Name:</th>-->
+<!--                        <th>Product Price:</th>-->
+<!--                        <th>Quantity:</th>-->
+
+<!--                    </tr>-->
+<!--                    <tr th:each="p : ${pp}">-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.purchase.purchase_id}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.purchase.date_and_time}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.purchase.store.store_Name}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.purchase.saleWorker.employee_name} + ' ' + ${p.purchase.saleWorker.employee_surname}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.product.product_Name}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.product.product_Price}"></th:block> Ден.</b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${p.quantity}"></th:block></b>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+
+<!--                <h2><b>Total: <th:block th:text="${total}"></th:block> Ден.</b></h2>-->
+
+
+<!--            </th:block>-->
+
+<!--            <form action="/purchase/finishPurchase" method="post">-->
+
+<!--                <button type="submit">Finish Purchase</button>-->
+
+<!--            </form>-->
+<!--        </th:block>-->
+
+
+
+
+
+<!--        <br>-->
+<!--    <th:block th:if="${seeProductsOnPurchase}">-->
+
+
+<!--        <h3>Write Purchase ID to see which products are on the Purchase </h3>-->
+<!--        <form action="/purchase" method="post">-->
+<!--            <input name="purchaseId" type="text">-->
+<!--            <button type="submit">See Products</button>-->
+<!--        </form>-->
+
+
+<!--        <br>-->
+
+
+<!--        <th:block th:if="${getProducts}">-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Purchase ID:</th>-->
+<!--                    <th>Date And Time:</th>-->
+<!--                    <th>Store:</th>-->
+<!--                    <th>Handled By:</th>-->
+<!--                    <th>Product Name:</th>-->
+<!--                    <th>Product Price:</th>-->
+<!--                    <th>Quantity:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="p : ${pp}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.purchase.purchase_id}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.purchase.date_and_time}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.purchase.store.store_Name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.purchase.saleWorker.employee_name} + ' ' + ${p.purchase.saleWorker.employee_surname}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.product.product_Name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.product.product_Price}"></th:block> Ден.</b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.quantity}"></th:block></b>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <h2><b>Total: <th:block th:text="${total}"></th:block> Ден.</b></h2>-->
+<!--        </th:block>-->
+
+
+<!--    </th:block>-->
+
+
+<!--</main>-->
+<!--<a href="/stores">Home</a>-->
+
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="Heading">Тhese are our deliveries from the warehouse to the stores</h1>
+</header>
+
+<div class="Main">
+    <main>
+
+        <a href="/stores" class="button-53" style="max-width: 180px"> ← Home</a>
+
+
+
+
+        <th:block>
+            <th:block th:if="${showDeliveries}">
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Delivery ID:</th>
+                        <th>Delivery Vehicle:</th>
+                        <th>Driver:</th>
+                        <th>Delivery to:</th>
+                        <th>Delivery from Warehouse:</th>
+
+                    </tr>
+                    <tr th:each="delivery : ${deliveries}">
+                        <td>
+                            <b><th:block th:text="${delivery.delivery_Id}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${delivery.delivery_vehicle}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${delivery.driver_name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${delivery.store.store_Name}"></th:block></b>
+                        </td>
+                        <td>
+                            <!--                    <b>Warehouse ID: <th:block th:text="${delivery.warehouseList.get(0).warehouse_Id}"></th:block></b>-->
+                            <b>Warehouse Address: <th:block th:text="${delivery.getWarehouseList().get(0).warehouse_address}"></th:block></b>
+
+                        </td>
+
+
+
+                    </tr>
+                </table>
+            </th:block>
+
+            <br>
+
+            <h3 class="smallHeading">Create a new delivery that you want to deliver products to store from  warehouse.</h3>
+            <form action="/delivery/makeDelivery" method="post">
+
+
+
+                <button type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px; border-radius: 5px;">Make New Delivery</button>
+            </form>
+            <br>
+
+            <th:block th:if="${makeDeliveryButton}">
+
+                <a href="/delivery" class="button-53" style="max-width: 180px"> ← Back</a>
+
+                <form action="/delivery/addDelivery" method="post">
+
+                    From Warehouse:
+                    <select name="warehouse_id" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                        <option th:each="war : ${warehouseList}" th:value="${war.warehouse_Id}" th:text="${war.warehouse_address}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+
+                    </select>
+
+                    To Store:
+                    <select name="store_id" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                        <option th:each="sto : ${stores}" th:value="${sto.store_Id}" th:text="${sto.store_Name}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+
+                    </select>
+
+                    Vehicle:
+                    <select name="vehicle" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                        <option th:each="veh : ${vehicles}" th:value="${veh}" th:text="${veh}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+
+                    </select>
+
+                    Driver:
+                    <select name="driver" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                        <option th:each="veh : ${drivers}" th:value="${veh}" th:text="${veh}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+
+                    </select>
+
+                    <button type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px;margin-top: 10px; border-radius: 5px;">Add Delivery</button>
+                </form>
+            </th:block>
+
+            <br>
+            <th:block th:if="${addedDelivery}">
+
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Delivery ID:</th>
+                        <th>Date And Time:</th>
+                        <th>From Warehouse:</th>
+                        <th>To Store:</th>
+                        <th>Driver:</th>
+                        <th>Vehicle:</th>
+
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><th:block th:text="${deliveryId}"></th:block></b>
+                        </td>
+
+                        <td>
+                            <b><th:block th:text="${dateDelivery}"></th:block></b>
+                        </td>
+
+
+                        <td>
+                            <b><th:block th:text="${warehouse}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${store}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${driver}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${vehicle}"></th:block></b>
+                        </td>
+
+                    </tr>
+                </table>
+
+                <h3><b>You successfully add Delivery. Lets add products on this Delivery</b></h3>
+
+                <form action="/delivery/addToDelivery" method="post">
+
+                    <div class="form-group">
+                        Select a Product
+                        <select title="Select a Product" name="productId" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+
+                            <option th:each="product : ${products}"  th:value="${product.product_ID}" th:text="${product.product_Name}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                            </option>
+                            <input type="number" required name="quantity" id="quantity" placeholder="0"  style="background-color: #b7d750; padding: 5px; border-radius: 10px">Insert Quantity
+
+                        </select>
+                    </div>
+
+                    <button type="submit" class="button-53">Add Product</button>
+                </form>
+            </th:block>
+            <br>
+            <th:block th:if="${deliveryHaveProducts}">
+                <table>
+                    <tr>
+                        <th>Delivery ID:</th>
+                        <th>Date And Time:</th>
+                        <th>To Store:</th>
+                        <th>Product Name:</th>
+                        <th>Product Price:</th>
+                        <th>Quantity:</th>
+
+                    </tr>
+                    <tr th:each="p : ${pp}">
+                        <td>
+                            <b><th:block th:text="${p.getDelivery().getDelivery_Id()}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.getDelivery().getDelivery_Date_And_Time()}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.getDelivery().getStore().getStore_Name()}"></th:block></b>
+                        </td>
+                        <!--                    <td>-->
+                        <!--                        <b><th:block th:text="${p.getDelivery().getWarehouseList().get(0).getWarehouse_address()}"></th:block></b>-->
+                        <!--                    </td>-->
+                        <td>
+                            <b><th:block th:text="${p.product.product_Name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.product.product_Price}"></th:block> Ден.</b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${p.quantity}"></th:block></b>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2><b>Total: <th:block th:text="${total}"></th:block> Ден.</b></h2>
+                <br>
+
+                <form action="/delivery/finishDelivery" method="post">
+
+                    <button type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px; border-radius: 5px;">Send Delivery</button>
+
+                </form>
+            </th:block>
+
+
+            <th:block th:if="${showDeliveries2}">
+
+
+                <h3 class="smallHeading">Select delivery id</h3>
+                <h4>If you want to see which products are delivered through delivery</h4>
+                <form action="/delivery" method="post">
+
+                    <select name="getProductsByDelivery" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                        <!--                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">-->
+                        <!--                    </option>-->
+                        <option th:each="delivery : ${deliveries}" th:selected="${del != null && del.delivery_Id == delivery.delivery_Id  ? true : false}" th:value="${delivery.delivery_Id}" th:text="${delivery.delivery_Id}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+                        <!--                th:selected="${stor != null && stor.store_Name == store.store_Name  ? true : false}"-->
+
+                    </select>
+
+                    <div style="border: 1px solid black; padding: 0; margin: 0; display: inline-block; border-radius: 5px; ">
+                        <input type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px; border-radius: 5px;">
+                    </div>
+                </form>
+
+                <!--        productsByDelivery-->
+                <th:block th:if="${searchProducts}">
+                    <table class="styled-table">
+                        <tr>
+                            <th>Product Name:</th>
+                            <th>Price:</th>
+                            <th>Manufacturer:</th>
+                            <th>Quantity:</th>
+
+                        </tr>
+                        <tr th:each="product : ${productsByDelivery}">
+                            <td>
+                                <b><th:block th:text="${product.productName}"></th:block></b>
+                            </td>
+                            <td>
+                                <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>
+                            </td>
+                            <td>
+                                <b><th:block th:text="${product.manufacturer}"></th:block></b>
+                            </td>
+                            <td>
+                                <b><th:block th:text="${product.quantity}"></th:block></b>
+                            </td>
+
+                        </tr>
+                    </table>
+                </th:block>
+
+            </th:block>
+        </th:block>
+
+
+
+    </main>
+
+    <hr>
+    <footer>
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+</div>
+
+</body>
+</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>Тhese are our deliveries from the warehouse to the stores</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+
+
+<!--    <th:block>-->
+<!--        <th:block th:if="${showDeliveries}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Delivery ID:</th>-->
+<!--                    <th>Delivery Vehicle:</th>-->
+<!--                    <th>Driver:</th>-->
+<!--                    <th>Delivery to:</th>-->
+<!--                    <th>Delivery from Warehouse:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="delivery : ${deliveries}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${delivery.delivery_Id}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${delivery.delivery_vehicle}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${delivery.driver_name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${delivery.store.store_Name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--    &lt;!&ndash;                    <b>Warehouse ID: <th:block th:text="${delivery.warehouseList.get(0).warehouse_Id}"></th:block></b>&ndash;&gt;-->
+<!--                        <b>Warehouse Address: <th:block th:text="${delivery.getWarehouseList().get(0).warehouse_address}"></th:block></b>-->
+
+<!--                    </td>-->
+
+
+
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </th:block>-->
+
+<!--        <br>-->
+
+<!--        <h3>Create a new delivery that you want to deliver products to store from  warehouse.</h3>-->
+<!--        <form action="/delivery/makeDelivery" method="post">-->
+
+
+<!--            <button type="submit">Make New Delivery</button>-->
+<!--        </form>-->
+<!--        <br>-->
+
+<!--        <th:block th:if="${makeDeliveryButton}">-->
+<!--            <form action="/delivery/addDelivery" method="post">-->
+
+<!--                From Warehouse:-->
+<!--                <select name="warehouse_id">-->
+<!--                    <option th:each="war : ${warehouseList}" th:value="${war.warehouse_Id}" th:text="${war.warehouse_address}">-->
+<!--                    </option>-->
+
+<!--                </select>-->
+
+<!--                To Store:-->
+<!--                <select name="store_id">-->
+<!--                    <option th:each="sto : ${stores}" th:value="${sto.store_Id}" th:text="${sto.store_Name}">-->
+<!--                    </option>-->
+
+<!--                </select>-->
+
+<!--                Vehicle:-->
+<!--                <select name="vehicle">-->
+<!--                    <option th:each="veh : ${vehicles}" th:value="${veh}" th:text="${veh}">-->
+<!--                    </option>-->
+
+<!--                </select>-->
+
+<!--                Driver:-->
+<!--                <select name="driver">-->
+<!--                    <option th:each="veh : ${drivers}" th:value="${veh}" th:text="${veh}">-->
+<!--                    </option>-->
+
+<!--                </select>-->
+
+<!--                <button type="submit">Add Delivery</button>-->
+<!--            </form>-->
+<!--        </th:block>-->
+
+<!--        <br>-->
+<!--        <th:block th:if="${addedDelivery}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Delivery ID:</th>-->
+<!--                    <th>Date And Time:</th>-->
+<!--                    <th>From Warehouse:</th>-->
+<!--                    <th>To Store:</th>-->
+<!--                    <th>Driver:</th>-->
+<!--                    <th>Vehicle:</th>-->
+
+
+
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${deliveryId}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${dateDelivery}"></th:block></b>-->
+<!--                    </td>-->
+
+
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${warehouse}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${store}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${driver}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${vehicle}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <h3><b>You successfully add Delivery. Lets add products on this Delivery</b></h3>-->
+
+<!--            <form action="/delivery/addToDelivery" method="post">-->
+
+<!--                <div class="form-group">-->
+<!--                    Select a Product-->
+<!--                    <select title="Select a Product" name="productId">-->
+
+<!--                        <option th:each="product : ${products}"  th:value="${product.product_ID}" th:text="${product.product_Name}">-->
+<!--                        </option>-->
+<!--                        <input type="number" required name="quantity" id="quantity" placeholder="0">Insert Quantity-->
+
+<!--                    </select>-->
+<!--                </div>-->
+
+<!--                <button type="submit">Add Product</button>-->
+<!--            </form>-->
+<!--        </th:block>-->
+<!--        <br>-->
+<!--        <th:block th:if="${deliveryHaveProducts}">-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Delivery ID:</th>-->
+<!--                    <th>Date And Time:</th>-->
+<!--                    <th>To Store:</th>-->
+<!--                    <th>Product Name:</th>-->
+<!--                    <th>Product Price:</th>-->
+<!--                    <th>Quantity:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="p : ${pp}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.getDelivery().getDelivery_Id()}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.getDelivery().getDelivery_Date_And_Time()}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.getDelivery().getStore().getStore_Name()}"></th:block></b>-->
+<!--                    </td>-->
+<!--&lt;!&ndash;                    <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <b><th:block th:text="${p.getDelivery().getWarehouseList().get(0).getWarehouse_address()}"></th:block></b>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </td>&ndash;&gt;-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.product.product_Name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.product.product_Price}"></th:block> Ден.</b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${p.quantity}"></th:block></b>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <h2><b>Total: <th:block th:text="${total}"></th:block> Ден.</b></h2>-->
+<!--            <br>-->
+
+<!--            <form action="/delivery/finishDelivery" method="post">-->
+
+<!--                <button type="submit">Send Delivery</button>-->
+
+<!--            </form>-->
+<!--        </th:block>-->
+
+
+<!--        <th:block th:if="${showDeliveries2}">-->
+
+
+<!--            <h3>Select delivery id</h3>-->
+<!--            <h4>If you want to see which products are delivered through delivery</h4>-->
+<!--            <form action="/delivery" method="post">-->
+
+<!--                <select name="getProductsByDelivery">-->
+<!--                    &lt;!&ndash;                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </option>&ndash;&gt;-->
+<!--                    <option th:each="delivery : ${deliveries}" th:selected="${del != null && del.delivery_Id == delivery.delivery_Id  ? true : false}" th:value="${delivery.delivery_Id}" th:text="${delivery.delivery_Id}">-->
+<!--                    </option>-->
+<!--    &lt;!&ndash;                th:selected="${stor != null && stor.store_Name == store.store_Name  ? true : false}"&ndash;&gt;-->
+
+<!--                </select>-->
+
+<!--                <input type="submit">-->
+<!--            </form>-->
+
+<!--    &lt;!&ndash;        productsByDelivery&ndash;&gt;-->
+<!--            <th:block th:if="${searchProducts}">-->
+<!--                <table>-->
+<!--                    <tr>-->
+<!--                        <th>Product Name:</th>-->
+<!--                        <th>Price:</th>-->
+<!--                        <th>Manufacturer:</th>-->
+<!--                        <th>Quantity:</th>-->
+
+<!--                    </tr>-->
+<!--                    <tr th:each="product : ${productsByDelivery}">-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${product.productName}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${product.manufacturer}"></th:block></b>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <b><th:block th:text="${product.quantity}"></th:block></b>-->
+<!--                        </td>-->
+
+<!--                    </tr>-->
+<!--                </table>-->
+<!--            </th:block>-->
+
+<!--        </th:block>-->
+<!--    </th:block>-->
+
+
+
+<!--</main>-->
+<!--<a href="/stores">Home</a>-->
+
+<!--</body>-->
+<!--</html>-->

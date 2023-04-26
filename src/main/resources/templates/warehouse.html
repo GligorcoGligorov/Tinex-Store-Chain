@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="Heading">This is our Warehouse List</h1>
+</header>
+
+<div class="Main">
+    <main>
+
+        <a href="/stores" class="button-53" style="max-width: 180px"> ← Home</a>
+
+
+
+
+        <th:block>
+            <table class="styled-table">
+                <tr>
+                    <th>Warehouse ID:</th>
+                    <th>Warehouse Location:</th>
+
+
+                </tr>
+                <tr th:each="wh : ${warehouseList}">
+                    <td>
+                        <b><th:block th:text="${wh.warehouse_Id}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${wh.warehouse_address}"></th:block></b>
+                    </td>
+
+                </tr>
+            </table>
+
+            <form action="/warehouse" method="post">
+                <button class="button-53">See Warehouse Employees</button>
+            </form>
+
+            <th:block th:if="${showEmployees}">
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Warehouse Employee Name:</th>
+                        <th>Warehouse Employee Surname:</th>
+                        <th>Works in Warehouse Location:</th>
+
+
+                    </tr>
+                    <tr th:each="wh : ${w2}">
+
+                        <td>
+                            <b><th:block th:text="${wh.warehouseWorker.employee_name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${wh.warehouseWorker.employee_surname}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${wh.warehouse.warehouse_address}"></th:block></b>
+                        </td>
+
+
+                    </tr>
+                </table>
+
+            </th:block>
+
+
+
+            <h3 class="smallHeading">Select Warehouse ID</h3>
+            <h4>if you want to see which products are in that warehouse</h4>
+            <form action="/warehouse/getProductsByWarehouse" method="post">
+
+                <select name="warehouseId" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+
+                    <option th:each="war : ${warehouseList}" th:selected="${w != null && w.warehouse_Id == war.warehouse_Id  ? true : false}"  th:value="${war.warehouse_Id}" th:text="${war.warehouse_address}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                    </option>
+
+                </select>
+                <div style="border: 1px solid black; padding: 0; margin: 0; display: inline-block; border-radius: 5px; ">
+                    <input type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px; border-radius: 5px;">
+                </div>
+            </form>
+
+            <!--        productsByDelivery-->
+            <th:block th:if="${showProducts}">
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Product Name:</th>
+                        <th>Price:</th>
+                        <th>Manufacturer:</th>
+                        <th>Quantity:</th>
+
+                    </tr>
+                    <tr th:each="product : ${products}">
+                        <td>
+                            <b><th:block th:text="${product.productName}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.manufacturer}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.quantity}"></th:block></b>
+                        </td>
+
+
+                    </tr>
+                </table>
+            </th:block>
+
+
+        </th:block>
+
+
+
+
+    </main>
+    <hr>
+    <footer>
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+
+</div>
+
+
+
+
+</body>
+</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>We have 2 Warehouse Locations</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+
+
+<!--    <th:block>-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Warehouse ID:</th>-->
+<!--                <th>Warehouse Location:</th>-->
+
+
+<!--            </tr>-->
+<!--            <tr th:each="wh : ${warehouseList}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${wh.warehouse_Id}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${wh.warehouse_address}"></th:block></b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+
+<!--        <form action="/warehouse" method="post">-->
+<!--            <button>See Warehouse Employees</button>-->
+<!--        </form>-->
+
+<!--        <th:block th:if="${showEmployees}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Warehouse Employee Name:</th>-->
+<!--                    <th>Warehouse Employee Surname:</th>-->
+<!--                    <th>Works in Warehouse Location:</th>-->
+
+
+<!--                </tr>-->
+<!--                <tr th:each="wh : ${w2}">-->
+
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${wh.warehouseWorker.employee_name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${wh.warehouseWorker.employee_surname}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${wh.warehouse.warehouse_address}"></th:block></b>-->
+<!--                    </td>-->
+
+
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--        </th:block>-->
+
+
+
+<!--        <h3>Select Warehouse ID</h3>-->
+<!--        <h4>if you want to see which products are in that warehouse</h4>-->
+<!--        <form action="/warehouse/getProductsByWarehouse" method="post">-->
+
+<!--            <select name="warehouseId">-->
+
+<!--                <option th:each="war : ${warehouseList}" th:selected="${w != null && w.warehouse_Id == war.warehouse_Id  ? true : false}"  th:value="${war.warehouse_Id}" th:text="${war.warehouse_address}">-->
+<!--                </option>-->
+
+<!--            </select>-->
+
+
+
+<!--            <input type="submit">-->
+<!--        </form>-->
+
+<!--        &lt;!&ndash;        productsByDelivery&ndash;&gt;-->
+<!--        <th:block th:if="${showProducts}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Product Name:</th>-->
+<!--                    <th>Price:</th>-->
+<!--                    <th>Manufacturer:</th>-->
+<!--                    <th>Quantity:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="product : ${products}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productName}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.manufacturer}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.quantity}"></th:block></b>-->
+<!--                    </td>-->
+
+
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </th:block>-->
+
+
+<!--    </th:block>-->
+
+
+
+
+<!--</main>-->
+
+<!--<a href="/stores">Home</a>-->
+
+
+<!--</body>-->
+<!--</html>-->

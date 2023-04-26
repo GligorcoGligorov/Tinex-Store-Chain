@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+
+<h1 class="Heading">IZVESTAI</h1>
+<div class="Main">
+
+
+    <main>
+        <a href="/stores" class="button-53" style="max-width: 180px"> ← Home</a>
+
+
+        <div style="padding: 10px">
+            <a href="/izvestai/izvestaj1" style="padding: 5px; margin: 10px;background-color: #b7d750; color: black; border: 2px solid black; border-radius: 10px;">IZVESTAJ 1 - Broenje vkupno quantity na site produkti i vkupnata cena na site produkti sto gi ima vo storot</a>
+        </div>
+
+        <th:block th:if="${izvestaj1 != null}">
+            <table class="styled-table">
+                <tr>
+                    <th>Store:</th>
+                    <th>City:</th>
+                    <th>Quantity Products:</th>
+                    <th>Sum Products Price:</th>
+
+                </tr>
+                <tr th:each="i : ${izvestaj1}">
+                    <td>
+                        <b><th:block th:text="${i.storeName}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.storeCity}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.quantityProducts}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.sumProductPrice}"></th:block> Ден.</b>
+                    </td>
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+        <div style="padding: 10px">
+
+            <a href="/izvestai/izvestaj2" style="padding: 5px; margin: 10px;background-color: #b7d750; color: black; border: 2px solid black; border-radius: 10px;">IZVESTAJ 2 - Mesecen I Godisen Profit Vo Magacin</a>
+        </div>
+        <th:block th:if="${izvestaj2 != null}">
+            <table class="styled-table">
+                <tr>
+                    <th>Warehouse:</th>
+                    <th>Mesec:</th>
+                    <th>Godina:</th>
+                    <th>Profit Vo Magacin:</th>
+
+                </tr>
+                <tr th:each="i : ${izvestaj2}">
+                    <td>
+                        <b><th:block th:text="${i.warehouseAddress}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.mesec}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.godina}"></th:block> Ден.</b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.profitOdProduktiVoMagacin}"></th:block> Ден.</b>
+                    </td>
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+        <div style="padding: 10px">
+
+            <a href="/izvestai/izvestaj3" style="padding: 5px; margin: 10px;background-color: #b7d750; color: black; border: 2px solid black; border-radius: 10px;">IZVESTAJ 3 - Mesecen I Godisen Profit Vo Prodavnica</a>
+        </div>
+        <th:block th:if="${izvestaj3 != null}">
+            <table class="styled-table">
+                <tr>
+                    <th>Store:</th>
+                    <th>Mesec:</th>
+                    <th>Godina:</th>
+                    <th>Profit Vo Prodavnica:</th>
+
+                </tr>
+                <tr th:each="i : ${izvestaj3}">
+                    <td>
+                        <b><th:block th:text="${i.storeName}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.mesec}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.godina}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.profitOdProduktiVoStore}"></th:block> Ден.</b>
+                    </td>
+
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+        <div style="padding: 10px">
+
+            <a href="/izvestai/izvestaj4" style="padding: 5px; margin: 10px;background-color: #b7d750; color: black; border: 2px solid black; border-radius: 10px;">IZVESTAJ 4 - Vkupen I znos Na Smetka I Produkti</a>
+        </div>
+        <th:block th:if="${izvestaj4 != null}">
+            <table class="styled-table">
+                <tr>
+                    <th>Purchase ID:</th>
+                    <th>Store Name:</th>
+                    <th>Vkupen Iznos Na Smetka:</th>
+                    <th>Vidovi Produkti:</th>
+                    <th>Vkupno Produkti:</th>
+
+
+                </tr>
+                <tr th:each="i : ${izvestaj4}">
+                    <td>
+                        <b><th:block th:text="${i.purchaseId}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.storeName}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.vkupenIznosNaSmetka}"></th:block> Ден.</b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.vidoviProdukti}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.produkti}"></th:block></b>
+                    </td>
+
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+        <div style="padding: 10px">
+
+            <a href="/izvestai/izvestaj5" style="padding: 5px; margin: 10px;background-color: #b7d750; color: black; border: 2px solid black; border-radius: 10px;">IZVESTAJ 5 - Vkupna Kolicina I Vkupna Cena Na Produkti Vo Warehouse</a>
+        </div>
+        <th:block th:if="${izvestaj5 != null}">
+            <table class="styled-table">
+                <tr>
+                    <th>Warehouse ID:</th>
+                    <th>Quantity Products:</th>
+                    <th>Sum Products Price:</th>
+
+                </tr>
+                <tr th:each="i : ${izvestaj5}">
+                    <td>
+                        <b><th:block th:text="${i.warehouseId}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.quantityProducts}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.sumProductsPrice}"></th:block> Ден.</b>
+                    </td>
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+        <div style="padding: 10px">
+
+            <a href="/izvestai/izvestaj6" style="padding: 5px; margin: 10px;background-color: #b7d750; color: black; border: 2px solid black; border-radius: 10px;">IZVESTAJ 6 - Vkupno Produkt I Vkupna Suma Vo Store Od Delivery</a>
+        </div>
+        <th:block th:if="${izvestaj6 != null}">
+            <table class="styled-table">
+                <tr>
+                    <th>Delivery ID:</th>
+                    <th>Quantity Products:</th>
+                    <th>Sum Products Price:</th>
+                    <th>Warehouse ID:</th>
+                    <th>Store:</th>
+
+
+
+                </tr>
+                <tr th:each="i : ${izvestaj6}">
+                    <td>
+                        <b><th:block th:text="${i.deliveryId}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.quantityProducts}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.sumPrice}"></th:block> Ден.</b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.warehouseId}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${i.storeName}"></th:block></b>
+                    </td>
+
+                </tr>
+            </table>
+        </th:block>
+
+        <br>
+        <br>
+
+    </main>
+    <hr>
+    <footer>
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+
+</div>
+
+
+
+</body>
+</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--    <h1>IZVESTAI</h1>-->
+
+<!--    <a href="/izvestai/izvestaj1">IZVESTAJ 1 - Broenje vkupno quantity na site produkti i vkupnata cena na site produkti sto gi ima vo storot</a>-->
+
+<!--    <th:block th:if="${izvestaj1 != null}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Store:</th>-->
+<!--                <th>City:</th>-->
+<!--                <th>Quantity Products:</th>-->
+<!--                <th>Sum Products Price:</th>-->
+
+<!--            </tr>-->
+<!--            <tr th:each="i : ${izvestaj1}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.storeName}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.storeCity}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.quantityProducts}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.sumProductPrice}"></th:block> Ден.</b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+<!--    <a href="/izvestai/izvestaj2">IZVESTAJ 2 - Mesecen I Godisen Profit Vo Magacin</a>-->
+
+<!--    <th:block th:if="${izvestaj2 != null}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Warehouse ID:</th>-->
+<!--                <th>Address:</th>-->
+<!--                <th>Mesecen Profit vo Magacin:</th>-->
+<!--                <th>Dve Godisen Profit vo Magacin:</th>-->
+
+<!--            </tr>-->
+<!--            <tr th:each="i : ${izvestaj2}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.warehouseId}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.warehouseAddress}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.mesecenProfitVoMagacin}"></th:block> Ден.</b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.dveGodisenProfitVoMagacin}"></th:block> Ден.</b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+<!--    <a href="/izvestai/izvestaj3">IZVESTAJ 3 - Mesecen I Godisen Profit Vo Prodavnica</a>-->
+
+<!--    <th:block th:if="${izvestaj3 != null}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Store:</th>-->
+<!--                <th>Mesecen Profit:</th>-->
+<!--                <th>Godisen Profit:</th>-->
+
+<!--            </tr>-->
+<!--            <tr th:each="i : ${izvestaj3}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.storeName}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.mesecenProfitVoProdavnica}"></th:block> Ден.</b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.godisenProfitVoProdavnica}"></th:block> Ден.</b>-->
+<!--                </td>-->
+
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+<!--    <a href="/izvestai/izvestaj4">IZVESTAJ 4 - Vkupen I znos Na Smetka I Produkti</a>-->
+
+<!--    <th:block th:if="${izvestaj4 != null}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Purchase ID:</th>-->
+<!--                <th>Store Name:</th>-->
+<!--                <th>Vkupen Iznos Na Smetka:</th>-->
+<!--                <th>Vidovi Produkti:</th>-->
+<!--                <th>Vkupno Produkti:</th>-->
+
+
+<!--            </tr>-->
+<!--            <tr th:each="i : ${izvestaj4}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.purchaseId}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.storeName}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.vkupenIznosNaSmetka}"></th:block> Ден.</b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.vidoviProdukti}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.produkti}"></th:block></b>-->
+<!--                </td>-->
+
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+<!--    <a href="/izvestai/izvestaj5">IZVESTAJ 5 - Vkupna Kolicina I Vkupna Cena Na Produkti Vo Warehouse</a>-->
+
+<!--    <th:block th:if="${izvestaj5 != null}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Warehouse ID:</th>-->
+<!--                <th>Quantity Products:</th>-->
+<!--                <th>Sum Products Price:</th>-->
+
+<!--            </tr>-->
+<!--            <tr th:each="i : ${izvestaj5}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.warehouseId}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.quantityProducts}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.sumProductsPrice}"></th:block> Ден.</b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+<!--    <a href="/izvestai/izvestaj6">IZVESTAJ 6 - Vkupno Produkt I Vkupna Suma Vo Store Od Delivery</a>-->
+
+<!--    <th:block th:if="${izvestaj6 != null}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Delivery ID:</th>-->
+<!--                <th>Quantity Products:</th>-->
+<!--                <th>Sum Products Price:</th>-->
+<!--                <th>Warehouse ID:</th>-->
+<!--                <th>Store:</th>-->
+
+
+
+<!--            </tr>-->
+<!--            <tr th:each="i : ${izvestaj6}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.deliveryId}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.quantityProducts}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.sumPrice}"></th:block> Ден.</b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.warehouseId}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${i.storeName}"></th:block></b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </th:block>-->
+
+<!--    <br>-->
+<!--    <br>-->
+<!--    <a href="/stores">Home</a>-->
+
+<!--</body>-->
+<!--</html>-->

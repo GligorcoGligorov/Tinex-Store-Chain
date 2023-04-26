@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="Heading">These are all the products</h1>
+</header>
+
+<div class="Main">
+
+    <main>
+        <a href="/stores" class="button-53" style="max-width: 180px"> ← Home</a>
+
+        <th:block>
+            <table class="styled-table">
+                <tr>
+                    <th>Product ID:</th>
+                    <th>Product Name:</th>
+                    <th>Manufacturer:</th>
+                    <th>Price:</th>
+                    <th>Category:</th>
+
+                </tr>
+                <tr th:each="p : ${products}">
+                    <td>
+                        <b><th:block th:text="${p.product_ID}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.product_Name}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.manufacturer}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.product_Price}"></th:block> Ден.</b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${p.categoryList.get(0)}"></th:block></b>
+
+                    </td>
+
+
+
+                </tr>
+            </table>
+
+            <form action="/products" method="post">
+                <label for="input">Search products by Manufacturer</label>
+                <input required id="input" type="text" name="manufacturer">
+                <button type="submit" class="button-53">Submit</button>
+            </form>
+
+
+            <th:block th:if="${pbm != null}">
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Product Name:</th>
+                        <th>Manufacturer:</th>
+                        <th>Price:</th>
+
+                    </tr>
+                    <tr th:each="product : ${pbm}">
+                        <td>
+                            <b><th:block th:text="${product.productName}"></th:block></b>
+                        </td>
+
+                        <td>
+                            <b><th:block th:text="${product.manufacturer}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>
+                        </td>
+
+
+                    </tr>
+                </table>
+            </th:block>
+
+
+
+        </th:block>
+
+
+    </main>
+
+    <hr>
+    <footer>
+
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+
+</div>
+
+
+</body>
+</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>These are all the products</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+
+
+<!--    <th:block>-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Product ID:</th>-->
+<!--                <th>Product Name:</th>-->
+<!--                <th>Manufacturer:</th>-->
+<!--                <th>Price:</th>-->
+<!--                <th>Category:</th>-->
+
+<!--            </tr>-->
+<!--            <tr th:each="p : ${products}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.product_ID}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.product_Name}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.manufacturer}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.product_Price}"></th:block> Ден.</b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${p.categoryList.get(0)}"></th:block></b>-->
+
+<!--                </td>-->
+
+
+
+<!--            </tr>-->
+<!--        </table>-->
+
+<!--        <form action="/products" method="post">-->
+<!--            <label for="input">Search products by Manufacturer</label>-->
+<!--            <input required id="input" type="text" name="manufacturer">-->
+<!--            <button type="submit">Submit</button>-->
+<!--        </form>-->
+
+
+<!--        <th:block th:if="${pbm != null}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Product Name:</th>-->
+<!--                    <th>Manufacturer:</th>-->
+<!--                    <th>Price:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="product : ${pbm}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productName}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.manufacturer}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>-->
+<!--                    </td>-->
+
+
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </th:block>-->
+
+
+
+<!--    </th:block>-->
+
+
+<!--</main>-->
+<!--<a href="/stores">Home</a>-->
+
+<!--</body>-->
+<!--</html>-->

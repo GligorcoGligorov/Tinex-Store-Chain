@@ -1,0 +1,309 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Welcome to out Store Chain</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="Heading">Welcome to our Store Chain App</h1>
+</header>
+<div class="Main">
+
+
+    <header>
+        <a href="/delivery">Get Deliveries</a>
+        <a href="/category">Get Categories</a>
+        <a href="/warehouse">Get Warehouses</a>
+        <a href="/products">Get Products</a>
+        <a href="/purchase">Get Purchases</a>
+        <a href="/izvestai">Get Reports</a>
+
+        <br>
+    </header>
+    <main>
+
+
+
+
+        <form action="/stores" method="post">
+            <button type="submit" class="button-53" role="button">Click here to <th:block th:text="${showStoreText}"></th:block> our stores!</button>
+        </form>
+        <th:block th:if="${showStores}">
+            <table class="styled-table">
+                <tr>
+                    <th>Store ID:</th>
+                    <th>Store Name:</th>
+                </tr>
+                <tr th:each="store : ${stores}">
+                    <td>
+                        <b><th:block th:text="${store.store_Id}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${store.store_Name}"></th:block></b>
+                    </td>
+
+                </tr>
+            </table>
+
+            <h2 class="smallHeading">See Sale Workers in our Stores</h2>
+            <form action="/stores/getSaleWorkers" method="post">
+                <button class="button-54" role="button">See Sale Workers</button>
+            </form>
+
+            <th:block th:if="${showSaleWorkers}">
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Employee Name:</th>
+                        <th>Employee Surname:</th>
+                        <th>Works in Store:</th>
+                    </tr>
+                    <tr th:each="s,iterStatus : ${saleWorkers}">
+                        <td>
+                            <b><th:block th:text="${s.employee_name}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${s.employee_surname}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${storeList.get(iterStatus.index).getStore_Name()}"></th:block></b>
+                        </td>
+
+                    </tr>
+                </table>
+            </th:block>
+
+
+            <h1 class="smallHeading">See Products in Store</h1>
+            <form action="/stores/getProductsByStore" method="post">
+
+                <div class="form-group">
+                    <label>Select the store you want to see which products are available</label>
+                    <select name="getProductsByStore" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight: bold">
+                        <!--                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">-->
+                        <!--                    </option>-->
+                        <option th:each="store : ${stores}" th:selected="${stor != null && stor.store_Name == store.store_Name  ? true : false}" th:value="${store.store_Id}" th:text="${store.store_Name}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                        </option>
+                    </select>
+                </div>
+
+                <div style="border: 1px solid black; padding: 0; margin: 0; display: inline-block; border-radius: 5px; ">
+                    <input type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px; border-radius: 5px;">
+                </div>
+            </form>
+
+            <th:block th:if="${isSelectedStore}">
+
+                <table class="styled-table">
+                    <tr>
+                        <th>Product Name:</th>
+                        <th>Price:</th>
+                        <th>Manufacturer:</th>
+                        <th>Quantity:</th>
+
+                    </tr>
+                    <tr th:each="product : ${productsInStore}">
+                        <td>
+                            <b><th:block th:text="${product.productName}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.manufacturer}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.quantity}"></th:block></b>
+                        </td>
+                    </tr>
+                </table>
+            </th:block>
+        </th:block>
+        <hr>
+    </main>
+
+    <footer>
+
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+<!--<button class="button-52" role="button">Button 52</button>-->
+
+<!--<img src="/pozadina.jpg">-->
+
+<!--<img src="/public/my-image.png" alt="My Image">-->
+
+</body>
+</html>
+
+
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <title>Welcome to out Store Chain</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>Welcome to our Welcome to out Store Chain App</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+<!--    <form action="/stores" method="post">-->
+<!--        <button type="submit">Click here to <th:block th:text="${showStoreText}"></th:block> our stores!</button>-->
+<!--    </form>-->
+<!--    <th:block th:if="${showStores}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Store ID:</th>-->
+<!--                <th>Store Name:</th>-->
+<!--            </tr>-->
+<!--            <tr th:each="store : ${stores}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${store.store_Id}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${store.store_Name}"></th:block></b>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--        </table>-->
+
+<!--        <h2>See Sale Workers in our Stores</h2>-->
+<!--        <form action="/stores/getSaleWorkers" method="post">-->
+<!--            <button>See Sale Workers</button>-->
+<!--        </form>-->
+
+<!--        <th:block th:if="${showSaleWorkers}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Employee Name:</th>-->
+<!--                    <th>Employee Surname:</th>-->
+<!--                    <th>Works in Store:</th>-->
+<!--                </tr>-->
+<!--                <tr th:each="s,iterStatus : ${saleWorkers}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${s.employee_name}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${s.employee_surname}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${storeList.get(iterStatus.index).getStore_Name()}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </th:block>-->
+
+
+<!--        <h1>See Products in Store</h1>-->
+<!--        <form action="/stores/getProductsByStore" method="post">-->
+
+<!--            <div class="form-group">-->
+<!--                <label>Select the store you want to see which products are available</label>-->
+<!--                <select name="getProductsByStore">-->
+<!--&lt;!&ndash;                    <option th:each="store : ${stores}" th:selected="${stor != null  ? stor.store_Name : stores.get(0).store_Name}" th:value="${store.store_Id}" th:text="${store.store_Name}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    </option>&ndash;&gt;-->
+<!--                    <option th:each="store : ${stores}" th:selected="${stor != null && stor.store_Name == store.store_Name  ? true : false}" th:value="${store.store_Id}" th:text="${store.store_Name}">-->
+<!--                    </option>-->
+
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <input type="submit">-->
+<!--        </form>-->
+
+<!--        <th:block th:if="${isSelectedStore}">-->
+
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Product Name:</th>-->
+<!--                    <th>Price:</th>-->
+<!--                    <th>Manufacturer:</th>-->
+<!--                    <th>Quantity:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="product : ${productsInStore}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productName}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.manufacturer}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.quantity}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    -->
+
+<!--                </tr>-->
+<!--            </table>-->
+
+
+<!--        </th:block>-->
+
+
+
+
+<!--    </th:block>-->
+
+
+
+<!--    <hr>-->
+
+
+
+
+<!--</main>-->
+<!--<footer>-->
+<!--    <a href="/delivery">Get Deliveries</a>-->
+<!--    <a href="/category">Get Categories</a>-->
+<!--    <a href="/warehouse">Get Warehouses</a>-->
+<!--    <a href="/products">Get Products</a>-->
+<!--    <a href="/purchase">Get Purchases</a>-->
+<!--    <a href="/izvestai">Get Izvestai</a>-->
+
+<!--</footer>-->
+<!--</body>-->
+<!--</html>-->

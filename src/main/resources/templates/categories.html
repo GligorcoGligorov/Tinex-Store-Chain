@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*width: 800px;*/
+            margin: auto;
+            background-image: url("/pozadina.jpg");
+
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="Heading" style="">These are the product Categories</h1>
+</header>
+
+
+<div class="Main">
+
+    <main>
+
+        <a href="/stores" class="button-53" style="max-width: 180px"> ← Home</a>
+
+
+        <th:block>
+            <table class="styled-table">
+                <tr>
+                    <th>Category ID:</th>
+                    <th>Category Name:</th>
+                </tr>
+                <tr th:each="category : ${categories}">
+                    <td>
+                        <b><th:block th:text="${category.category_Id}"></th:block></b>
+                    </td>
+                    <td>
+                        <b><th:block th:text="${category.category_name}"></th:block></b>
+                    </td>
+                </tr>
+            </table>
+
+
+            <h3 class="smallHeading">Write Category Name</h3>
+            <h4>If you want to see which products are in this category</h4>
+            <form action="/category" method="post">
+
+                <select name="getProductsByCategory" style="padding: 5px; background-color: #b7d750; border-radius: 10px; border: 2px solid black; font-weight:
+bold">
+                    <option  th:selected="${catId != null && catId == cat.category_name  ? true : false}" th:each="cat : ${categories}"  th:value="${cat.category_name}" th:text="${cat.category_name}" style="background-color: whitesmoke; color: black; font-weight: bold; cursor: pointer; border-radius: 5px; :hover {background-color: deepskyblue;}">
+                    </option>
+
+                </select>
+
+                <div style="border: 1px solid black; padding: 0; margin: 0; display: inline-block; border-radius: 5px; ">
+                    <input type="submit" class="button-53" style="max-width: 150px; padding: 4px; border: 2px solid white; margin: 0px; border-radius: 5px;">
+                </div>
+            </form>
+
+            <!--        productsByDelivery-->
+            <th:block th:if="${selectedCategory}">
+                <table class="styled-table">
+                    <tr>
+                        <th>Product Name:</th>
+                        <th>Price:</th>
+                        <th>Manufacturer:</th>
+                        <th>Category:</th>
+
+                    </tr>
+                    <tr th:each="product : ${productsByCategory}">
+                        <td>
+                            <b><th:block th:text="${product.productName}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.manufacturer}"></th:block></b>
+                        </td>
+                        <td>
+                            <b><th:block th:text="${product.categoryName}"></th:block></b>
+                        </td>
+
+                    </tr>
+                </table>
+            </th:block>
+
+
+        </th:block>
+
+
+    </main>
+
+    <hr>
+    <footer>
+        <div>
+            <h5>Location</h5>
+            <h6>Skopje Ruger Boshkovikj 16, Skopje 1000</h6>
+        </div>
+
+        <div>
+            <h5>Contact</h5>
+            <h6> 02 308 8292</h6>
+        </div>
+
+    </footer>
+
+</div>
+
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+
+<!--        table, th, td {-->
+<!--            border: 1px solid black;-->
+<!--            border-collapse: collapse;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>These are the product Categories</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+
+<!--    <th:block>-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>Category ID:</th>-->
+<!--                <th>Category Name:</th>-->
+<!--            </tr>-->
+<!--            <tr th:each="category : ${categories}">-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${category.category_Id}"></th:block></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><th:block th:text="${category.category_name}"></th:block></b>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </table>-->
+
+
+<!--        <h3>Write Category Name</h3>-->
+<!--        <h4>If you want to see which products are in this category</h4>-->
+<!--        <form action="/category" method="post">-->
+
+<!--            <select name="getProductsByCategory">-->
+<!--                <option  th:selected="${catId != null && catId == cat.category_name  ? true : false}" th:each="cat : ${categories}"  th:value="${cat.category_name}" th:text="${cat.category_name}">-->
+<!--                </option>-->
+
+<!--            </select>-->
+
+<!--            <input type="submit">-->
+<!--        </form>-->
+
+<!--        &lt;!&ndash;        productsByDelivery&ndash;&gt;-->
+<!--        <th:block th:if="${selectedCategory}">-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Product Name:</th>-->
+<!--                    <th>Price:</th>-->
+<!--                    <th>Manufacturer:</th>-->
+<!--                    <th>Category:</th>-->
+
+<!--                </tr>-->
+<!--                <tr th:each="product : ${productsByCategory}">-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productName}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.productPrice}"></th:block> Ден.</b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.manufacturer}"></th:block></b>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <b><th:block th:text="${product.categoryName}"></th:block></b>-->
+<!--                    </td>-->
+
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </th:block>-->
+
+
+<!--    </th:block>-->
+
+
+<!--</main>-->
+<!--<a href="/stores">Home</a>-->
+
+<!--</body>-->
+<!--</html>-->
